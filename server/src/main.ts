@@ -1,21 +1,29 @@
 import { WebSocketServer } from "ws";
-import { TData } from './types'
+import { TData } from "./types";
+import GameManager from "./gameManager";
 
 const wss = new WebSocketServer({ port: 8080 });
+let gameManager = new GameManager();
 
 wss.on("connection", (ws) => {
   ws.on("error", console.error);
 
   ws.on("message", (wsData) => {
     // TODO: handle case where typecasting fails (adding `default` to switch doesn't work)
-    let data = JSON.parse(wsData.toString()) as TData
+    let data = JSON.parse(wsData.toString()) as TData;
 
-    switch(data.type) {
+    switch (data.type) {
       case "createRoom":
-        console.log("creating room")
+        const roomId = gameManager.createRoom();
+        ws.send(JSON.stringify({ roomId }));
         break;
+
       case "joinRoom":
-        console.log(`Joining room with id ${data.roomId}`)
+        try {
+          gameManager.joinRoom(data.roomId);
+        } catch (error) {
+          ws.send(JSON.stringify({ error }));
+        }
         break;
     }
   });
