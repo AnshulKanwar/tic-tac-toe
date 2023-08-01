@@ -24,7 +24,6 @@ export default class Room {
       // randomly assign the starting player
       this.turn = Math.random() < 0.5 ? this.player1 : this.player2;
     }
-
     return playerId;
   }
 

@@ -7,7 +7,7 @@ export default class GameManager {
   createRoom() {
     const roomId = uuid()
     const room = new Room()
-    this.rooms['roomId'] = room
+    this.rooms[roomId] = room
 
     return roomId
   }
