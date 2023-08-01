@@ -15,14 +15,14 @@ wss.on("connection", (ws) => {
     switch (data.type) {
       case "createRoom":
         const roomId = gameManager.createRoom();
-        ws.send(JSON.stringify({ roomId }));
+        ws.send(JSON.stringify({ type: data.type, roomId }));
         break;
 
       case "joinRoom":
         try {
           gameManager.joinRoom(data.roomId);
         } catch (error) {
-          ws.send(JSON.stringify({ error }));
+          ws.send(JSON.stringify({ type: "error", error }));
         }
         break;
 
