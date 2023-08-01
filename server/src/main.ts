@@ -20,7 +20,8 @@ wss.on("connection", (ws) => {
 
       case "joinRoom":
         try {
-          gameManager.joinRoom(data.roomId);
+          let playerId = gameManager.joinRoom(data.roomId);
+          ws.send(JSON.stringify({ type: data.type, playerId}))
         } catch (error) {
           ws.send(JSON.stringify({ type: "error", error }));
         }
