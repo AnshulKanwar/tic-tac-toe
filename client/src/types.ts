@@ -3,4 +3,9 @@ interface ICreateRoom {
   roomId: string
 }
 
-export type TData = ICreateRoom
+interface IJoinRoom {
+  type: "joinRoom";
+  playerId: string
+}
+
+export type TData = ICreateRoom | IJoinRoom 

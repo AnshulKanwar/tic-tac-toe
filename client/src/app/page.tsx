@@ -1,3 +1,4 @@
+"use client"
 import CreateRoomButton from "@/components/createRoomButton";
 import JoinRoomButton from "@/components/joinRoomButton";
 

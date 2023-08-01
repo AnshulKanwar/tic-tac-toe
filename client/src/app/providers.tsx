@@ -1,26 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation"
-import { TData } from "@/types";
-import { WebSocketContext } from "./wsContext";
-import { useWebSocket } from '@/hooks/useWebSocket'
+import GameManager from "@/lib/gameManager";
+import { GameManagerContext } from "../context/gameManagerContext";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
-  const router = useRouter()
-
-  const { ws } = useWebSocket("ws://localhost:8080", (ws, wsData) => {
-    const data = JSON.parse(wsData) as TData
-
-    switch(data.type) {
-      case "createRoom":
-        router.push(`/room?id=${data.roomId}`)
-        break;
-    }
-  })
+  let gameManager = new GameManager()
 
   return (
-    <WebSocketContext.Provider value={ws}>
+    <GameManagerContext.Provider value={gameManager}>
       {children}
-    </WebSocketContext.Provider>
+    </GameManagerContext.Provider>
   )
 }

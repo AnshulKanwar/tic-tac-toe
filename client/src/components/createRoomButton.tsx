@@ -1,12 +1,16 @@
 "use client";
-import { WebSocketContext } from "@/app/wsContext"
 import { useContext } from "react"
+import { useRouter } from "next/navigation";
+import { GameManagerContext } from "@/context/gameManagerContext"
 
 export default function CreateRoomButton() {
-  const ws = useContext(WebSocketContext);
+  const gameManager = useContext(GameManagerContext);
+  const router = useRouter()
 
   const createRoom = () => {
-    ws?.send(JSON.stringify({ type: "createRoom" }))
+    gameManager?.createRoom((roomId) => {
+      router.push(`/room?id=${roomId}`)
+    })
   }
 
   return (
