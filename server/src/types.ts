@@ -7,4 +7,10 @@ interface IJoinRoom {
   roomId: string;
 }
 
-export type TData = ICreateRoom | IJoinRoom
+interface IPlayTurn {
+  type: "playTurn";
+  roomId: string;
+  playerId: string;
+}
+
+export type TData = ICreateRoom | IJoinRoom | IPlayTurn

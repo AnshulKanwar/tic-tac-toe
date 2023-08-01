@@ -12,8 +12,12 @@ export default class GameManager {
     return roomId
   }
 
-  joinRoom(id: string) {
-    let playerId = this.rooms[id].joinRoom()
+  joinRoom(roomId: string) {
+    let playerId = this.rooms[roomId].joinRoom()
     return playerId
+  }
+
+  playTurn(roomId: string, playerId: string) {
+    this.rooms[roomId].playTurn(playerId)
   }
 }

@@ -25,6 +25,9 @@ wss.on("connection", (ws) => {
           ws.send(JSON.stringify({ error }));
         }
         break;
+
+      case "playTurn":
+        break;
     }
   });
 });
