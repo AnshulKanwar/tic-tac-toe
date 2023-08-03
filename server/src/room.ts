@@ -25,13 +25,13 @@ export default class Room {
     else if (this.player2 === null) this.player2 = { id: playerId, ws };
     else ws.send(JSON.stringify({ type: "error", error: "Room Full" }));
 
+    ws.send(JSON.stringify({ type: "joinRoom", playerId }));
+
     // once both players have joined
     if (this.player1 !== null && this.player2 !== null) {
       // start the game
       this.startGame();
     }
-
-    ws.send(JSON.stringify({ type: "joinRoom", playerId }));
   }
 
   private startGame() {
