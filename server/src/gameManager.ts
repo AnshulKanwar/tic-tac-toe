@@ -1,4 +1,5 @@
 import { v4 as uuid } from "uuid";
+import WebSocket from "ws";
 import Room from "./room";
 
 export default class GameManager {
@@ -12,16 +13,20 @@ export default class GameManager {
     return roomId;
   }
 
-  joinRoom(roomId: string) {
+  joinRoom(roomId: string, ws: WebSocket) {
     if (this.rooms[roomId]) {
-      let playerId = this.rooms[roomId].joinRoom();
+      let playerId = this.rooms[roomId].joinRoom(ws);
       return playerId;
     } else {
-      throw Error("Room does not exist")
+      throw Error("Room does not exist");
     }
   }
 
-  playTurn(roomId: string, playerId: string) {
-    this.rooms[roomId].playTurn(playerId);
+  playTurn(
+    roomId: string,
+    playerId: string,
+    move: { row: number; column: number }
+  ) {
+    this.rooms[roomId].playTurn(playerId, move);
   }
 }

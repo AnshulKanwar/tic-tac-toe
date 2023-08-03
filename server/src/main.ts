@@ -19,15 +19,11 @@ wss.on("connection", (ws) => {
         break;
 
       case "joinRoom":
-        try {
-          let playerId = gameManager.joinRoom(data.roomId);
-          ws.send(JSON.stringify({ type: data.type, playerId}))
-        } catch (error) {
-          ws.send(JSON.stringify({ type: "error", error: error.message }));
-        }
+        gameManager.joinRoom(data.roomId, ws);
         break;
 
       case "playTurn":
+        gameManager.playTurn(data.roomId, data.playerId, data.move);
         break;
     }
   });
