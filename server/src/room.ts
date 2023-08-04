@@ -40,22 +40,47 @@ export default class Room {
 
     // choose a random starting player
     this.turn = Math.random() < 0.5 ? this.player1 : this.player2;
-    this.turn?.ws.send(JSON.stringify({ type: "playTurn", turn: this.turn.id, state: this.state }));
+    this.player1?.ws.send(
+      JSON.stringify({
+        type: "playTurn",
+        turn: this.turn?.id,
+        state: this.state,
+      })
+    );
+    this.player2?.ws.send(
+      JSON.stringify({
+        type: "playTurn",
+        turn: this.turn?.id,
+        state: this.state,
+      })
+    );
   }
 
   // TODO: handle case when a player is not present or has not joined
   playTurn(playerId: string, move: { row: number; column: number }) {
     if (this.turn?.id == playerId) {
       if (this.turn?.id == this.player1?.id) {
-        this.state[move.row][move.column] = "X"
-        this.turn = this.player2
+        this.state[move.row][move.column] = "X";
+        this.turn = this.player2;
       } else if (this.turn?.id == this.player2?.id) {
-        this.state[move.row][move.column] = "O"
-        this.turn = this.player1
+        this.state[move.row][move.column] = "O";
+        this.turn = this.player1;
       }
 
-      this.player1?.ws.send(JSON.stringify({ type: "playTurn", turn: this.turn?.id, state: this.state}))
-      this.player2?.ws.send(JSON.stringify({ type: "playTurn", turn: this.turn?.id, state: this.state}))
+      this.player1?.ws.send(
+        JSON.stringify({
+          type: "playTurn",
+          turn: this.turn?.id,
+          state: this.state,
+        })
+      );
+      this.player2?.ws.send(
+        JSON.stringify({
+          type: "playTurn",
+          turn: this.turn?.id,
+          state: this.state,
+        })
+      );
     }
   }
 }
