@@ -8,4 +8,14 @@ interface IJoinRoom {
   playerId: string
 }
 
-export type TData = ICreateRoom | IJoinRoom 
+interface IStartGame {
+  type: "startGame"
+}
+
+interface IPlayTurn {
+  type: "playTurn";
+  turn: string,
+  state: string[][]
+}
+
+export type TData = ICreateRoom | IJoinRoom | IStartGame | IPlayTurn

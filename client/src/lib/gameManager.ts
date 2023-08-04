@@ -5,6 +5,8 @@ export default class GameManager {
 
   private createRoomCb: ((roomId: string) => void) | null = null;
   private joinRoomCb: ((playerId: string) => void) | null = null;
+  onStartGame: (() => void) | null = null;
+  onPlayTurn: ((trun: string, state: string[][]) => void) | null = null;
 
   constructor() {
     this.ws = new WebSocket("ws://localhost:8080");
@@ -12,7 +14,7 @@ export default class GameManager {
 
     this.ws.onmessage = (ev) => {
       let data = JSON.parse(ev.data.toString()) as TData;
-      console.log(data)
+      console.log(data);
       switch (data.type) {
         case "createRoom":
           if (this.createRoomCb) this.createRoomCb(data.roomId);
@@ -20,6 +22,14 @@ export default class GameManager {
 
         case "joinRoom":
           if (this.joinRoomCb) this.joinRoomCb(data.playerId);
+          break;
+
+        case "startGame":
+          if (this.onStartGame) this.onStartGame();
+          break;
+
+        case "playTurn":
+          if (this.onPlayTurn) this.onPlayTurn(data.turn, data.state);
           break;
       }
     };
@@ -31,7 +41,7 @@ export default class GameManager {
   }
 
   joinRoom(roomId: string, cb: (playerId: string) => void) {
-    this.joinRoomCb = cb
-    this.ws?.send(JSON.stringify({ type: "joinRoom", roomId }))
+    this.joinRoomCb = cb;
+    this.ws?.send(JSON.stringify({ type: "joinRoom", roomId }));
   }
 }
