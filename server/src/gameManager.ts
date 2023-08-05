@@ -15,8 +15,7 @@ export default class GameManager {
 
   joinRoom(roomId: string, ws: WebSocket) {
     if (this.rooms[roomId]) {
-      let playerId = this.rooms[roomId].joinRoom(ws);
-      return playerId;
+      this.rooms[roomId].joinRoom(ws);
     } else {
       throw Error("Room does not exist");
     }
@@ -25,7 +24,7 @@ export default class GameManager {
   playTurn(
     roomId: string,
     playerId: string,
-    move: { row: number; column: number }
+    move: { rowIdx: number; colIdx: number }
   ) {
     this.rooms[roomId].playTurn(playerId, move);
   }

@@ -11,7 +11,7 @@ interface IPlayTurn {
   type: "playTurn";
   roomId: string;
   playerId: string;
-  move: { row: number; column: number };
+  move: { rowIdx: number; colIdx: number };
 }
 
 export type TData = ICreateRoom | IJoinRoom | IPlayTurn;
