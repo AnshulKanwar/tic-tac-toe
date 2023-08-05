@@ -73,7 +73,6 @@ export default function Room() {
             <span><Copy className="text-zinc-400 group-hover:text-white" /></span>
           </button>
           <div className="text-zinc-500">Waiting for other player...</div>
-          <span>{player}</span>
         </div>
       )}
     </main>
