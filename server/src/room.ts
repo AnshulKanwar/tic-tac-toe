@@ -58,7 +58,10 @@ export default class Room {
 
   // TODO: handle case when a player is not present or has not joined
   playTurn(playerId: string, move: { rowIdx: number; colIdx: number }) {
-    if (this.turn?.id == playerId) {
+    if (
+      this.turn?.id == playerId &&
+      this.state[move.rowIdx][move.colIdx] == "-"
+    ) {
       if (this.turn?.id == this.player1?.id) {
         this.state[move.rowIdx][move.colIdx] = "X";
         this.turn = this.player2;
