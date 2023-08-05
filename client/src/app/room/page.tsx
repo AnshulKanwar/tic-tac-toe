@@ -13,6 +13,7 @@ export default function Room() {
   const gameManager = useContext(GameManagerContext)
 
   const [player, setPlayer] = useState<string | null>(null)
+  const [turn, setTurn] = useState<string | null>(null)
   const [isGameStart, setIsGameStart] = useState(false)
   const [state, setState] = useState<string[][] | null>(null)
 
@@ -24,6 +25,7 @@ export default function Room() {
     }
 
     gameManager.onPlayTurn = (turn: string, state: string[][]) => {
+      setTurn(turn)
       setState(state)
     }
   }
@@ -39,7 +41,12 @@ export default function Room() {
   return (
     <main className="mt-36 grid place-items-center">
       {isGameStart ? (
-        <Board state={state!} />
+        <div className="flex flex-col items-center">
+          <div className="text-center mb-16 text-xl">
+            {turn === player ? "Your turn" : "Waiting for other players move..."}
+          </div>
+          <Board state={state!} />
+        </div>
       ) : (
         <div className="text-center">
           <p>Share this link with your friend</p>

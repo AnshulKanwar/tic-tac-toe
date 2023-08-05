@@ -9,7 +9,7 @@ export default function Board({ state }: BoardProps) {
   const gameManager = useContext(GameManagerContext)
 
   return (
-    <div>
+    <div className="w-fit h-fit">
       {state.map((row, rowIdx) => (
         <div key={rowIdx} className="flex border-b last:border-none">
           {row.map((tile, colIdx) => (
