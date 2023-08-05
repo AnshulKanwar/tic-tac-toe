@@ -7,6 +7,7 @@ export default class GameManager {
   private joinRoomCb: ((playerId: string) => void) | null = null;
   onStartGame: (() => void) | null = null;
   onPlayTurn: ((trun: string, state: string[][]) => void) | null = null;
+  onGameOver: ((winner: string, state: string[][]) => void) | null = null;
 
   roomId: string | null = null;
   playerId: string | null = null;
@@ -37,6 +38,15 @@ export default class GameManager {
         case "playTurn":
           if (this.onPlayTurn) this.onPlayTurn(data.turn, data.state);
           break;
+
+        case "gameOver":
+          if (this.onGameOver) {
+            if (data.result === "win") {
+              this.onGameOver(data.winner, data.state)
+            } else if (data.result === "draw") {
+              this.onGameOver("draw", data.state);
+            }
+          }
       }
     };
   }

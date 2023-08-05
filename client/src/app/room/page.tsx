@@ -16,6 +16,8 @@ export default function Room() {
   const [turn, setTurn] = useState<string | null>(null)
   const [isGameStart, setIsGameStart] = useState(false)
   const [state, setState] = useState<string[][] | null>(null)
+  const [isGameOver, setIsGameOver] = useState(false)
+  const [winner, setWinner] = useState<string | null>(null)
 
   const link = `http://localhost:3000/room?id=${id}`
 
@@ -26,6 +28,16 @@ export default function Room() {
 
     gameManager.onPlayTurn = (turn: string, state: string[][]) => {
       setTurn(turn)
+      setState(state)
+    }
+
+    gameManager.onGameOver = (winner, state) => {
+      setIsGameOver(true)
+      if (winner === "draw") {
+        setWinner("draw")
+      } else {
+        setWinner(winner)
+      }
       setState(state)
     }
   }
@@ -42,9 +54,15 @@ export default function Room() {
     <main className="mt-36 grid place-items-center">
       {isGameStart ? (
         <div className="flex flex-col items-center">
-          <div className="text-center mb-16 text-xl">
-            {turn === player ? "Your turn" : "Waiting for other players move..."}
-          </div>
+          {isGameOver ? (
+            <div className="text-center mb-16 text-xl">
+              {winner === "draw" ? "Draw" : winner === player ? "You Won" : "You Lost"}
+            </div>
+          ) : (
+            <div className="text-center mb-16 text-xl">
+              {turn === player ? "Your turn" : "Waiting for other players move..."}
+            </div>
+          )}
           <Board state={state!} />
         </div>
       ) : (
