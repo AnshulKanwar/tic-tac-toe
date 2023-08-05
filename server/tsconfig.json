@@ -6,6 +6,6 @@
     "outDir": "build",                                   /* Specify an output folder for all emitted files. */
     "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
   }
 }
