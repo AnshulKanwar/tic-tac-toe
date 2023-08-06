@@ -13,7 +13,7 @@ export default class GameManager {
   playerId: string | null = null;
 
   constructor() {
-    this.ws = new WebSocket("ws://localhost:8080");
+    this.ws = new WebSocket("wss://tic-tac-toe-emev.onrender.com/");
     this.ws.onerror = console.error;
 
     this.ws.onmessage = (ev) => {
